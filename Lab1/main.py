@@ -14,8 +14,8 @@ def cdm(arr):
     return rez
 
 
-arr = [int(i) for i in input().split()]
-print('the gratest common divizor of your number is  ', cdm(arr))
+#arr = [int(i) for i in input().split()]
+#print('the gratest common divizor of your number is  ', cdm(arr))
 
 
 # ________________________________________________________________________
@@ -137,7 +137,7 @@ def find_number(sentence):
     return aux
 
 
-#print(find_number("Buna sunt 489 sute eu"))
+#print(find_number("Buna sunt 40sute sute eu"))
 
 
 # _________________________________________________________________________
@@ -166,7 +166,7 @@ def count_words(prop):
     return counter
 
 
-print(count_words("Aproape am terminat       tema"))
+#print(count_words("Aproape am terminat       tema"))
 
 
 # _________________________________________________________________________
