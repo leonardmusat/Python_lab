@@ -14,11 +14,11 @@ def ex5(rules, dict):
             words.remove(words[-1])
         if middle in words:
             counter = counter + 1
-        if counter == 3:
-            return True
+    if counter == 3*len(dict):
+        return True
     return False
 
 
 rules = {("key1", "", "inside", ""), ("key2", "start", "middle", "winter")}
-dictionary = {"key1": "come inside it's too cold out"}
+dictionary = {"key1": "come inside it's too cold out", "key2": "start middle winter"}
 print(ex5(rules, dictionary))
