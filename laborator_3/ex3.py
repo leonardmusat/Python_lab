@@ -1,20 +1,30 @@
-def compare(dict1, dict2):
-    list1 = list(dict1.keys())
-    list2 = list(dict2.keys())
-    set1 = set(list1)
-    set2 = set(list2)
+def compare_dictionaries(dict1, dict2):
+    for i, j in zip(dict1.keys(), dict2.keys()): #folosesc zip() pentru a itera prin 2 liste, formate din cheile dictionarelor, in acelasi timp
+        if i != j:
+            return False
 
-    if set1.issubset(set2) and set2.issubset(set1):
-        x1 = dict1.values()
-        x = set(x1)
-        y1 = dict2.values()
-        y = set(y1)
-        if not(x.issubset(y) and y.issubset(x)):
+        neutru1 = dict1[i]
+        neutru2 = dict2[j]
+
+        if type(neutru1) != type(neutru2):
+            return False
+
+        if isinstance(neutru1, dict):
+            if compare_dictionaries(neutru1, neutru2) != True:
+                return False
+        elif isinstance(neutru1, list):
+            for char1, char2 in zip(neutru1, neutru2):
+                if (char1 != char2):
+                    return False
+        elif isinstance(neutru1, set):
+            if neutru1 & neutru2 != neutru1:
+                return False
+        elif neutru1 != neutru2:
             return False
     return True
 
 
-dict1 = {'name': 'Alice', 'age': 30, 'city': 'New York'}
-dict2 = {'name': 'Alice', 'age': 30, 'city': 'New York'}
-
-print(compare(dict1, dict2))
+dict_a = {'a': 1, 'b': {'c': 2, 'd': [3, 4]}}
+dict_b = {'a': 1, 'b': {'c': 2, 'd': [3, 4]}}
+result = compare_dictionaries(dict_a, dict_b)
+print(result)
