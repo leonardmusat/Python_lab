@@ -42,16 +42,22 @@ class CustomLabelInter:
         self.label.place(x=x, y=y)
 class CustomWindow:
     def __init__(self):
+        self.bool = 0
         self.seconds = 0
         self.window = Tk()
         self.window.geometry("490x450")
         self.window.title("Timer")
         self.window.config(background="black")
 
-        self.button = CustomButton(self.window, 'Start')
-        self.button.place_button(110,300)
-        self.button.button.config(font=('Ink Free', 20, 'bold'))
-        self.button.button.config(command=self.start)
+        self.button_start = CustomButton(self.window, 'Start')
+        self.button_start.place_button(110,300)
+        self.button_start.button.config(font=('Ink Free', 20, 'bold'))
+        self.button_start.button.config(command=self.start)
+
+        self.button_stop = CustomButton(self.window, 'Stop')
+        self.button_stop.place_button(210, 300)
+        self.button_stop.button.config(font=('Ink Free', 20, 'bold'))
+        self.button_stop.button.config(command=self.stop)
 
         self.hours = CustomLabel(self.window,0)
         self.hours.place_label(100,50)
@@ -107,30 +113,30 @@ class CustomWindow:
         self.notification.set_audio(audio.Default, loop=False)
         self.window.mainloop()
 
-    def compute(self, number):
-        if number >= 0:
-            self.seconds.number = number % 60
-            self.minutes.number = (number // 60) % 60
-            self.hours.number = number // 3600
+    def stop(self):
+        self.bool = 1
 
+    def compute(self):
+        if self.bool == 0 and self.seconds_num >= 0:
+            self.seconds.number = self.seconds_num % 60
+            self.minutes.number = (self.seconds_num // 60) % 60
+            self.hours.number = self.seconds_num // 3600
 
-
-            # Update labels
             self.seconds.config()
             self.minutes.config()
             self.hours.config()
 
-            # Schedule the compute function to be called after 1000 milliseconds (1 second)
-            
-            self.window.after(1000, lambda: self.compute(number - 1))
-        else:
+            self.seconds_num = self.seconds_num - 1
+            self.window.after(1000, self.compute)
+        elif self.bool == 1:
+            print("Paused")
+        elif self.seconds_num < 0:
             self.notification.show()
 
     def start(self):
+        self.bool = 0
         self.seconds_num = self.hours.number * 3600 + self.minutes.number * 60 + self.seconds.number
-        self.compute(self.seconds_num)
-
-
+        self.compute()
 
 window = CustomWindow()
 
