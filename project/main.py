@@ -59,6 +59,11 @@ class CustomWindow:
         self.button_stop.button.config(font=('Ink Free', 20, 'bold'))
         self.button_stop.button.config(command=self.stop)
 
+        self.button_start = CustomButton(self.window, 'Reset')
+        self.button_start.place_button(300, 300)
+        self.button_start.button.config(font=('Ink Free', 20, 'bold'))
+        self.button_start.button.config(command=self.reset)
+
         self.hours = CustomLabel(self.window,0)
         self.hours.place_label(100,50)
 
@@ -115,6 +120,17 @@ class CustomWindow:
 
     def stop(self):
         self.bool = 1
+
+    def reset(self):
+        self.seconds_num = 0
+
+        self.seconds.number = self.seconds_num % 60
+        self.minutes.number = (self.seconds_num // 60) % 60
+        self.hours.number = self.seconds_num // 3600
+
+        self.seconds.config()
+        self.minutes.config()
+        self.hours.config()
 
     def compute(self):
         if self.bool == 0 and self.seconds_num >= 0:
